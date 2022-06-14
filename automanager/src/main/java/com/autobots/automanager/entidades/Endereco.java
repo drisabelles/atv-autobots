@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.springframework.hateoas.Link;
+
 import lombok.Data;
 
 @Data
@@ -28,5 +30,8 @@ public class Endereco {
 	private String codigoPostal;
 	@Column(unique = false, nullable = true)
 	private String informacoesAdicionais;
+
+	public void add(Link linkProprio) {
+	}
 
 }

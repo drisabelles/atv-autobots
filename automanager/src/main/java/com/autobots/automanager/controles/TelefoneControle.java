@@ -2,7 +2,17 @@ package com.autobots.automanager.controles;
 
 import java.util.List;
 
+import com.autobots.automanager.entidades.Cliente;
+import com.autobots.automanager.entidades.Telefone;
+import com.autobots.automanager.modelos.ClienteSelecionador;
+import com.autobots.automanager.modelos.TelefoneAdicionadorLink;
+import com.autobots.automanager.modelos.TelefoneAtualizador;
+import com.autobots.automanager.modelos.TelefoneSelecionador;
+import com.autobots.automanager.repositorios.ClienteRepositorio;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,47 +22,118 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.autobots.automanager.entidades.Telefone;
-import com.autobots.automanager.modelo.TelefoneAtualizador;
-import com.autobots.automanager.modelo.TelefoneSelecionador;
-import com.autobots.automanager.repositorios.TelefoneRepositorio;
-
 @RestController
 @RequestMapping("/telefone")
 public class TelefoneControle {
   @Autowired
-  private TelefoneRepositorio repositorio;
+  private ClienteRepositorio repositorioCliente;
   @Autowired
-  private TelefoneSelecionador selecionador;
+  private ClienteSelecionador selecionadorCliente;
 
-  @GetMapping("/telefone/{id}")
-  public Telefone obterTelefone(@PathVariable long id) {
-    List<Telefone> telefones = repositorio.findAll();
-    return selecionador.selecionar(telefones, id);
+  @Autowired
+  private TelefoneSelecionador selecionadorTelefone;
+
+  @Autowired
+  private TelefoneAdicionadorLink adicionadorLink;
+
+  @GetMapping("/{clienteId}")
+  public ResponseEntity<?> obterTelefones(@PathVariable long clienteId) {
+    HttpStatus status = HttpStatus.NOT_FOUND;
+
+    List<Cliente> clientes = repositorioCliente.findAll();
+    Cliente cliente = selecionadorCliente.selecionar(clientes, clienteId);
+    List<Telefone> telefones = cliente.getTelefones();
+
+    if (telefones.size() > 0) {
+      status = HttpStatus.FOUND;
+      adicionadorLink.adicionarLink(telefones);
+
+      return new ResponseEntity<List<Telefone>>(telefones, status);
+    }
+    return new ResponseEntity<>(status);
   }
 
-  @GetMapping("/telefones")
-  public List<Telefone> obterTelefones() {
-    List<Telefone> telefones = repositorio.findAll();
-    return telefones;
+  @GetMapping("/{clienteId}/{telefoneId}")
+  public ResponseEntity<?> obterTelefone(@PathVariable long clienteId, @PathVariable long telefoneId) {
+    HttpStatus status = HttpStatus.NOT_FOUND;
+
+    List<Cliente> clientes = repositorioCliente.findAll();
+    Cliente cliente = selecionadorCliente.selecionar(clientes, clienteId);
+
+    Telefone telefoneEncontrado = selecionadorTelefone.selecionar(cliente, telefoneId);
+
+    if (telefoneEncontrado != null) {
+      status = HttpStatus.FOUND;
+      adicionadorLink.adicionarLink(telefoneEncontrado);
+
+      return new ResponseEntity<Telefone>(telefoneEncontrado, status);
+    }
+    return new ResponseEntity<>(status);
   }
 
-  @PostMapping("/cadastro")
-  public void cadastrarTelefone(@RequestBody Telefone telefone) {
-    repositorio.save(telefone);
+  @PostMapping("/{clienteId}")
+  public ResponseEntity<?> cadastrarTelefone(@PathVariable long clienteId, @RequestBody Telefone telefone) {
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+
+    try {
+      List<Cliente> clientes = repositorioCliente.findAll();
+      Cliente cliente = selecionadorCliente.selecionar(clientes, clienteId);
+
+      cliente.getTelefones().add(telefone);
+      repositorioCliente.save(cliente);
+      status = HttpStatus.CREATED;
+      return new ResponseEntity<>(status);
+    } catch (Exception e) {
+      return new ResponseEntity<>(status);
+    }
   }
 
-  @PutMapping("/atualizar")
-  public void atualizarTelefone(@RequestBody Telefone atualizacao) {
-    Telefone telefone = repositorio.getById(atualizacao.getId());
-    TelefoneAtualizador atualizador = new TelefoneAtualizador();
-    atualizador.atualizar(telefone, atualizacao);
-    repositorio.save(telefone);
+  @PutMapping("/{clienteId}")
+  public ResponseEntity<?> atualizarTelefone(@PathVariable long clienteId, @RequestBody Telefone telefone) {
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+
+    try {
+      List<Cliente> clientes = repositorioCliente.findAll();
+      Cliente cliente = selecionadorCliente.selecionar(clientes, clienteId);
+
+      Telefone telefoneEncontrado = selecionadorTelefone.selecionar(cliente, telefone.getId());
+
+      if (telefoneEncontrado == null) {
+        return new ResponseEntity<>(status);
+      }
+
+      TelefoneAtualizador telefoneAtualizador = new TelefoneAtualizador();
+      telefoneAtualizador.atualizar(telefoneEncontrado, telefone);
+
+      repositorioCliente.save(cliente);
+      status = HttpStatus.OK;
+      return new ResponseEntity<>(status);
+    } catch (Exception e) {
+      return new ResponseEntity<>(status);
+    }
   }
 
-  @DeleteMapping("/excluir")
-  public void excluirTelefone(@RequestBody Telefone exclusao) {
-    Telefone telefone = repositorio.getById(exclusao.getId());
-    repositorio.delete(telefone);
+  @DeleteMapping("/{clienteId}/{telefoneId}")
+  public ResponseEntity<?> deletarTelefone(@PathVariable long clienteId, @PathVariable long telefoneId) {
+    HttpStatus status = HttpStatus.BAD_REQUEST;
+
+    try {
+      List<Cliente> clientes = repositorioCliente.findAll();
+      Cliente cliente = selecionadorCliente.selecionar(clientes, clienteId);
+
+      Telefone telefone = selecionadorTelefone.selecionar(cliente, telefoneId);
+
+      if (telefone == null) {
+        return new ResponseEntity<>(status);
+      }
+
+      cliente.getTelefones().remove(telefone);
+      repositorioCliente.save(cliente);
+      status = HttpStatus.OK;
+
+      return new ResponseEntity<>(status);
+    } catch (Exception e) {
+      return new ResponseEntity<>(status);
+    }
   }
 }

@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.springframework.hateoas.Link;
+
 import lombok.Data;
 
 @Data
@@ -35,5 +37,8 @@ public class Cliente {
 	private Endereco endereco;
 	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
 	private List<Telefone> telefones = new ArrayList<>();
+
+	public void add(Link linkProprio) {
+	}
 
 }
