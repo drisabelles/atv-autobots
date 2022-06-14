@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.autobots.automanager.entidades.Cliente;
 import com.autobots.automanager.entidades.Telefone;
-import com.autobots.automanager.modelos.ClienteSelecionador;
-import com.autobots.automanager.modelos.TelefoneAdicionadorLink;
-import com.autobots.automanager.modelos.TelefoneAtualizador;
-import com.autobots.automanager.modelos.TelefoneSelecionador;
+import com.autobots.automanager.modelos.adicionadores.TelefoneAdicionadorLink;
+import com.autobots.automanager.modelos.atualizadores.TelefoneAtualizador;
+import com.autobots.automanager.modelos.selecionadores.ClienteSelecionador;
+import com.autobots.automanager.modelos.selecionadores.TelefoneSelecionador;
 import com.autobots.automanager.repositorios.ClienteRepositorio;
 
 import org.springframework.beans.factory.annotation.Autowired;

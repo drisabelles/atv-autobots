@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.autobots.automanager.entidades.Cliente;
 import com.autobots.automanager.entidades.Endereco;
-import com.autobots.automanager.modelos.cliente.ClienteSelecionador;
-import com.autobots.automanager.modelos.endereco.AdicionadorLinkEndereco;
-import com.autobots.automanager.modelos.endereco.EnderecoSelecionador;
+import com.autobots.automanager.modelos.adicionadores.EnderecoAdicionadorLink;
+import com.autobots.automanager.modelos.selecionadores.ClienteSelecionador;
+import com.autobots.automanager.modelos.selecionadores.EnderecoSelecionador;
 import com.autobots.automanager.repositorios.ClienteRepositorio;
 import com.autobots.automanager.repositorios.EnderecoRepositorio;
 
@@ -27,7 +27,7 @@ public class EnderecoControle {
   @Autowired
   private EnderecoRepositorio repositorio;
   @Autowired
-  private AdicionadorLinkEndereco adicionadorLink;
+  private EnderecoAdicionadorLink adicionadorLink;
   @Autowired
   private EnderecoSelecionador selecionador;
 

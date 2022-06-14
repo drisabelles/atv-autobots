@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.autobots.automanager.entidades.Cliente;
-import com.autobots.automanager.modelos.ClienteAdicionadorLink;
-import com.autobots.automanager.modelos.ClienteAtualizador;
-import com.autobots.automanager.modelos.ClienteSelecionador;
+import com.autobots.automanager.modelos.adicionadores.ClienteAdicionadorLink;
+import com.autobots.automanager.modelos.atualizadores.ClienteAtualizador;
+import com.autobots.automanager.modelos.selecionadores.ClienteSelecionador;
 import com.autobots.automanager.repositorios.ClienteRepositorio;
 
 @RestController

@@ -1,5 +1,7 @@
 package com.autobots.automanager.modelos;
 
+import com.autobots.automanager.enumeracoes.TipoDocumento;
+
 public class StringVerificadorNulo {
 
 	public boolean verificar(String dado) {
@@ -10,5 +12,9 @@ public class StringVerificadorNulo {
 			}
 		}
 		return nulo;
+	}
+
+	public boolean verificar(TipoDocumento tipo) {
+		return false;
 	}
 }
