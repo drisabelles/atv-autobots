@@ -33,6 +33,10 @@ public class Seguranca extends WebSecurityConfigurerAdapter {
   @Autowired
   CustomUserDetailsService userDetailsService;
 
+  private static final String[] rotasPublicas = {
+      "/dashboard/**",
+  };
+
   @Override
   @Bean
   protected AuthenticationManager authenticationManager() throws Exception {
@@ -42,6 +46,10 @@ public class Seguranca extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable();
+
+    http.authorizeRequests()
+        .antMatchers(rotasPublicas).permitAll();
+
     http.authorizeRequests().antMatchers(HttpMethod.POST,
         "/auth/authentication").permitAll().anyRequest()
         .authenticated().and()
@@ -50,7 +58,6 @@ public class Seguranca extends WebSecurityConfigurerAdapter {
                 tokenServico,
                 usuarioRepositorio),
             UsernamePasswordAuthenticationFilter.class);
-    // http.authorizeRequests().anyRequest().permitAll();
 
     http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
   }
