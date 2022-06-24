@@ -48,8 +48,8 @@ Aqui estão as linguagens, frameworks e plataformas utilizadas para o desenvolvi
 
 ## 🗃️ Organização
 📁 **api:** contém os arquivos e código necessários para o armazenamento e disponibilização das informações em api restfull.
-* 📁 ./src/main/java/com/comunicacao/api/controles: códigos responsáveis pelo fluxo de informações referentes a api.
-* 📁 ./src/main/java/com/comunicacao/api/modelos: códigos modelos para representação hierárquica da api. 
+* 📁 **./src/main/java/com/comunicacao/api/controles:** códigos responsáveis pelo fluxo de informações referentes a api.
+* 📁 **./src/main/java/com/comunicacao/api/modelos:** códigos modelos para representação hierárquica da api. 
 
 📁 **automanager:** contém os códigos aos quais foram desenvolvidos para criar a aplicação.
 * 📁 **./src/main/java/com/autobots/automanager/configuracao:** códigos sobre as configurações de segurança.
