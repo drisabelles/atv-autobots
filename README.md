@@ -42,19 +42,26 @@ Aqui estão as linguagens, frameworks e plataformas utilizadas para o desenvolvi
 - [X] ATV II - Implementação dos níveis de maturidade.
 - [X] ATV III - Atualizações de base (usuários, veículos, serviços, peças, vendas e etc.).
 - [X] ATV IV - Atualizações de segurança via JWT.
-- [ ] ATV V -  Disponibilização das informações em APIs RESTFull protegidas por autenticação e autorização JWT.
+- [X] ATV V -  Disponibilização das informações em APIs RESTFull protegidas por autenticação e autorização JWT.
 
 <br />
 
 ## 🗃️ Organização
-Em breve!
+📁 **api:** contém os arquivos e código necessários para o armazenamento e disponibilização das informações em api restfull.
+* 📁 ./src/main/java/com/comunicacao/api/controles: códigos responsáveis pelo fluxo de informações referentes a api.
+* 📁 ./src/main/java/com/comunicacao/api/modelos: códigos modelos para representação hierárquica da api. 
+
+📁 **automanager:** contém os códigos aos quais foram desenvolvidos para criar a aplicação.
+* 📁 **./src/main/java/com/autobots/automanager/configuracao:** códigos sobre as configurações de segurança.
+* 📁 **./src/main/java/com/autobots/automanager/controles:** códigos que são os controles, responsáveis pelo fluxo de informações.
+* 📁 **./src/main/java/com/autobots/automanager/entidades:** códigos nos quais temos a representação dos correspondentes a determinados objetos.
+* 📁 **./src/main/java/com/autobots/automanager/enumeracoes:** códigos com métodos, contrutores e intâncias.
+* 📁 **./src/main/java/com/autobots/automanager/modelos:** códigos das representações hierárquicas correpondentes a atualizadores, adicionadores e selecionadores.
+* 📁 **./src/main/java/com/autobots/automanager/repositorios:** códigos que encapsulam a lógica para acessar os dados.
+* 📁 **./src/main/java/com/autobots/automanager/servico:** códigos onde temos os cadastros de serviços realizados pela empresa. 
 
 <br />
 
-## ⌨️ Como rodar
-Em breve!
-
-<br />
 
 # 💛
 
