@@ -54,6 +54,7 @@ $ npm install
 $ npm start
 
 ```
+</br>
 
 ## 🗂️ Organização das pastas <a name="folders"></a>
 
